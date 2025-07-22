@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://event.unitar.org/sites/default/files/product/environment-day-concept-8kk6nzy_1.jpg') no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .login-container {
+            width: 420px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, .2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+            color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+        }
+
+        .login-container h2 {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            color: #52C05A;
+        }
+
+        .login-as-button {
+            display: flex;
+            justify-content: space-between;
+            color: #52C05A;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 95%;
+            color: black;
+        }
+
+        .login-container select {
+            margin: 10px 0;
+            padding: 10px; 
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 101%;
+        }
+
+        .login-container input[type="submit"] {
+            font-weight: bold;
+            font-size: 20px;
+            color: #8BE37C;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            width: 101%;
+        }
+
+        .logout-button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        /* Style for the button */
+        .logout-button {
+            display: inline-block;
+            padding: 2px;
+            border: none;
+            background: none;
+            cursor: pointer;
+          margin-left: 400px; /* Adjust margin as needed */
+          margin-top: 2px;
+        }
+
+        /* Styling for the image within the button */
+        .logout-icon {
+            width: 30px; /* Adjust as needed */
+            height: 34px; /* Adjust as needed */
+            vertical-align: middle;
+              display: inline; 
+
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+<a href="/home" class="logout-button">
+                <img class="logout-icon" src="https://cdn2.iconfinder.com/data/icons/picons-essentials/57/logout-1024.png" alt="Logout">
+            </a>
+        <h2>LOGIN</h2>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <form action="/login_view" method="post">
+            {% csrf_token %}
+
+            <div class="login-as-button">
+                <select name="login_type">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="business">Business</option>
+                </select>
+            </div>                                
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
+
+        <p>Don't have an account? <a href="/signup">Create now</a></p>
+
+        <div class="logout-button-container">
+            <p>Forgot Password? <a href="/forgotpassword">Reset</a></p>
+            
+        </div>
+    </div>
+</body>
+</html>

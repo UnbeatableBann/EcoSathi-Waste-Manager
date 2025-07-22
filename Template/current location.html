@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Map with Leaflet</title>
+    <!-- Include Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        /* Set the size of the map */
+        #mapid { height: 400px; }
+    </style>
+</head>
+<body>
+    <div>
+        <p>Current Coordinates:</p>
+        <p id="coordinates"></p>
+    </div>
+    <div id="mapid"></div>
+
+    <script>
+        // Function to create a map with Leaflet
+        function createMap() {
+            var myMap = L.map('mapid').setView([0, 0], 2); // Initial view with zoom level 2
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+            }).addTo(myMap);
+
+            // Function to get current location and update the map
+            function getCurrentLocation() {
+                if ("geolocation" in navigator) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var lat = position.coords.latitude;
+                        var lon = position.coords.longitude;
+                        myMap.setView([lat, lon], 15); // Set the map view to the current coordinates
+                        L.marker([lat, lon]).addTo(myMap); // Add a marker at the location
+                        document.getElementById('coordinates').innerText = `Latitude: ${lat}, Longitude: ${lon}`;
+                    });
+                } else {
+                    console.log('Geolocation is not supported by your browser');
+                }
+            }
+
+            // Call the function to get current location
+            getCurrentLocation();
+        }
+
+        // Call the createMap function when the page loads
+        window.onload = createMap;
+    </script>
+</body>
+</html>

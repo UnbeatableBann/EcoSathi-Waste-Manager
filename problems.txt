@@ -1,0 +1,7 @@
+static images for all pages 
+validation and sercurity
+forgot password
+alert messages
+CSRF IN COMPLAIN
+enduser page
+openmapbox

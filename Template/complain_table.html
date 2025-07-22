@@ -1,0 +1,64 @@
+<!-- complain_table.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complain Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Complain Table</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Created At</th>
+                <th>Account Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint.full_name }}</td>
+                    <td>{{ complaint.address }}</td>
+                    <td>{{ complaint.phone_number }}</td>
+                    <td>{{ complaint.description }}</td>
+                    <td>
+                        {% if complaint.image %}
+                            <img src="{{ complaint.image.url }}" alt="Complaint Image" style="max-width: 100px;">
+                        {% else %}
+                            No Image
+                        {% endif %}
+                    </td>
+                    <td>{{ complaint.created_at }}</td>
+                    <td>{{ complaint.account_type }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

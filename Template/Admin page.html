@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        :root {
+            --green: green;
+            --black: black;
+        }
+
+ body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            scroll-behavior: smooth;
+        }
+        
+        .header {
+            color: #144B0B;
+            border: 0px solid;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 88%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 9%;
+            background-color: #45A646;
+            color: #fff;
+            box-shadow: 0 3px 4px rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+
+.header.scrolled {
+    background-color: #144B0B;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+ .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bolder;
+            color: #144B0B;
+        }
+
+        .logo img {
+            width: 40px;
+            background-color: rgba(103, 195, 85, 0.5);
+            height: auto;
+            margin-right: 10px;
+        }
+
+         .nav a {
+        margin: 0 15px;
+        text-decoration: none;
+        color: #fff;
+        padding: 10px 20px;
+        background-color: #144B0B;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+        align-items: center;
+    }
+    .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 1rem;
+            font-weight: bold;
+            font-size: 19px;
+        }
+
+        .nav a:hover {
+            color: #fff;
+        }
+
+        
+        /* User Info Styles */
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .username-input {
+            padding: 10px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .user-photo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #144B0B;
+        }
+         table {
+            width: 60%;
+            border-collapse: collapse;
+            margin-top: 40px;
+            margin: 0px auto;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding:19px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #45A646;
+            color: #fff;
+        }
+ #profile-container {     
+      position: relative;
+      display: inline-block;
+    }
+
+    #profile-info {
+      display: none;
+      position: absolute;
+      top: 70px;
+      right: 10px;
+      width: 250px;
+      background-color: #ecf0f1;
+      border: 1px solid #bdc3c7;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 15px;
+      color: #2c3e50;
+      z-index: 1;
+    }
+
+    #profile-container:hover #profile-info {
+      display: block;
+    }
+
+    #profile-info h2 {
+      margin: 10px 0;
+      color: #3498db;
+    }
+
+    #profile-info p {
+      margin: 5px 0;
+      color: #7f8c8d;
+    }
+
+    #logout-link {
+      color: #fff;
+      background-color: #e74c3c;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      display: inline-block;
+    }
+
+    #logout-link:hover {
+      background-color: #c0392b;
+    }
+.services {
+    background-color: #fff;
+    padding: 120px;
+    text-align: center;
+}
+
+ .services h1{
+        font-size: 45px;
+        color: #000;
+        margin-bottom: 25px;
+        position: relative;
+        align-items: center;
+
+       }
+.services h1::after{
+       content: "";
+    position: absolute;
+    width: 14%;
+    height: 6px;
+    display: block;
+    margin: 0 43%;
+    background-color: #4caf50;
+       }
+
+
+.box-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+/* Box Styles */
+.services .box {
+    width: 300px;
+    padding: 20px;
+    background-color: #D1D7D1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+}
+
+.services .box:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.services .box img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.services .box h3 {
+    color: #144B0B;
+    font-size: 24px;
+}
+
+.services .box button {
+    background-color: #144B0B;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.services .box button:hover {
+    background-color: #0D3605;
+}
+
+/* table Styles */
+
+.services garbagePickup h2 ::after{
+        content:"";
+        position: absolute;
+        width: 57%;
+        height: 6px;
+        display: block;
+        margin: 0 auto;
+        background-color: #4caf50;
+       }
+       /* Locate Form Heading */
+#garbagePickup h2 {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#garbagePickup h2::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    display: block;
+    margin: 0 auto;
+    background-color: #144B0B;
+   
+}
+
+/* Complain Form Heading */
+#complaints h2 {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#complaints h2::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    display: block;
+    margin: 0 auto;
+    background-color: #144B0B;
+}
+/* Locate Form */
+#garbagePickup {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adjust the box shadow */
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-top: 80px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    text-align: center;
+}
+#garbagePickup:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Adjust the box shadow on hover */
+}
+
+/* Complain Form */
+#complaints {
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adjust the box shadow */
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-top: 80px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    text-align: center;}
+
+#complaints:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7); /* Adjust the box shadow on hover */
+}
+
+         .contact h1{
+            width: 20%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            flex-direction: column; 
+            margin: 20px auto;
+            padding: 36px 25px;
+        }
+
+        .contact h1{
+        font-size: 45px;
+        color: #000;
+        margin-bottom: 25px;
+        position: relative;
+        align-items: center;
+
+       }
+
+       .contact h1::after{
+        content:"";
+        position: absolute;
+        width: 57%;
+        height: 6px;
+        display: block;
+        margin: 0 auto;
+        background-color: #4caf50;
+       }
+
+}
+
+.contact .box {
+    padding: 1000px 1000px;
+    background: #69B636;
+    outline-offset: -1rem;
+    text-align: center;
+    font-size: 150%;
+    height: 390px;
+}
+
+.contact .box-container {
+        background: #69B636;
+
+    border: 0px solid;
+    display: flex;
+    gap: 1.9rem;
+}
+
+
+
+.contact .box-container img{
+    width: 40px; /* You can adjust the size as needed */
+    height: auto;
+}
+
+
+.contact .box {
+    padding: 20px;
+    background:#69B636;
+    text-align: left;
+    color: #fff;
+
+
+}
+
+
+.contact h3 {
+    top: 20px;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.contact p {
+        font-size: 25px;
+
+    margin: 10px 0;
+}
+
+.contact .share a {
+    color: #fff;
+    margin-right: 10px;
+}
+.contact .share img {
+    width: 40px; /* You can adjust the size as needed */
+    height: auto;
+}
+.contact .box .share {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+}
+
+.contact .box .share a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #fff;
+    background-color: #7EDC40;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.contact .box .share a:hover {
+    background-color: #144B0B;
+}
+.contact .contact img {
+            width: 30px;
+            height: auto;
+        }
+
+        .contact .contact us {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+        }
+.contact .links {
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 10px;
+    display: block;
+        margin-left: 40px;
+}
+
+.contact .links i {
+    margin-left: 40px;
+}
+.contact .Quick {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10px, 2fr));
+    gap: 5px;
+}
+
+.contact .Quick {
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    margin-bottom: 0px;
+    display: block;
+    margin-left: 30px;
+    width: 170px;
+    background-color: #69B636;
+    padding: 5px 90px ;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+           
+}
+.contact .Quick:hover{
+     box-shadow: 1px 1px 10px 4px var(--green);
+}
+
+
+
+
+.contact .quick-links-button img {
+    width: 40px; /* You can adjust the size as needed */
+    height: auto;
+}
+.contact .quick-links-button {
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    margin-bottom: 10px;
+    display: block;
+        margin-left: 30px;
+        width: 170px;
+        background-color: #7EDC40;
+            padding: ;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+}
+
+.contact .quick-links-button i {
+    margin-right: 10px;
+}
+
+.contact .quick-links-button img {
+    width: 40px; /* You can adjust the size as needed */
+    height: auto;
+    }
+ .contact .box-container .box:hover {
+            box-shadow: 1px 1px 10px 4px var(--green);
+        }
+
+.contact a:hover {
+            color: #144B0B;
+        }
+         
+        .contact .quick-links-button:hover {
+            background-color: #53AF16;
+            color: #fff;
+        }
+.contact .youtube-section {
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.contact .youtube-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
+}
+
+.contact .youtube-section {
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: 30px;
+        margin-bottom: 0px;
+
+    width: 170px;
+    background-color: #69B636;
+    padding: 15px 80px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+           
+}
+.contact .youtube-section:hover{
+     box-shadow: 1px 1px 10px 4px var(--green);
+}
+.contact .youtube-section h3 {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.contact .youtube-section iframe {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.contact .video-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.contact .video-buttons .video-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #7EDC40;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.contact .video-buttons .video-button:hover {
+    background-color: #53AF16;
+}
+.contact  .video-buttons img {
+    width: 40px; /* You can adjust the size as needed */
+    height: auto;
+    }
+ .contact .youtube-section .subscribe-button {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    background-color: #69B636; /* Adjust the background color */
+    transition: background-color 0.3s;
+    height:50px;
+}
+
+.contact .youtube-section .subscribe-button img {
+    width: 150px; /* Adjust the size of the image */
+    height: auto;
+}
+
+.contact .youtube-section .subscribe-button:hover {
+    background-color: #69B636; /* Adjust the background color on hover */
+}
+#imageModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer a {
+            color: #7EDC40;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+           </style>
+</head>
+
+<body>
+{% csrf_token %}
+
+
+  <div class="header">
+         <div class="logo">
+            <img src="C:/Users/soham/Downloads/EcoSathi/EcoSathi/logo.png" alt="Logo"> 
+            Ecosathi
+        </div>
+        <div class="nav">
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </div>
+       <div class="user-info">
+	    Welcome, {{username}} 
+           
+    <div id="profile-container">
+      <div id="profile-photo">
+ <div class="user-photo"><img src="https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/user-profile-icon.png" alt="User Photo" style="width: 40px; height: 40px; border-radius: 60px;" >      </div>
+      <div id="profile-info"> 
+        <h2>Welcome,Your Name <br>{{email}}<br> {{phone}}</h2>
+        <a id="logout-link" href="/home">Logout</a>  
+
+      </div>
+    </div>
+
+</div>
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">x</span>
+    <img id="modalImage" class="modal-content">
+</div>
+</div>
+        </div>
+    </div>
+    <!-- Services Section -->
+   <div class="services" id="services">
+    <h1>Services</h1>
+    <div class="box-container">
+        <!-- Locate Box -->
+        <div class="box">
+        <img src="https://img.freepik.com/free-vector/two-workers-uniform-loading-waste-from-trash-containers-into-garbage-truck-cartoon-illustration_1284-65369.jpg" alt="Image 2" style="width: 280px; height: 220px; margin-right: 20px;">
+          <h3>Pick-up</h3>
+                    <button onclick="showPickupForm()">Pick-up table</button>
+        </div>
+        <!-- Complain table -->
+        <div class="box">
+                <img src="https://antmyerp.com/wp-content/uploads/2022/05/Complaint-Management-Software.jpg" style="width: 240px; height: 240px; margin-right: 20px;">
+            <h3>Complain</h3>
+            <button onclick="showComplainForm()">Complain Table</button>
+        </div>
+    </div>
+
+    <!-- Locate Form -->
+    <div class="table" id="garbagePickup">
+              <h2>Pickup Booking Table</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>User Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Pickup Date</th>
+                <th>Pickup Time</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in pickup_bookings %}
+                <tr>
+                    <td>{{ booking.companyName }}</td>
+                    <td>{{ booking.userName }}</td>
+                    <td>{{ booking.address }}</td>
+                    <td>{{ booking.phone_number }}</td>
+                    <td>{{ booking.pickupDate }}</td>
+                    <td>{{ booking.pickupTime }}</td>
+                    <td>{{ booking.created_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>                                             
+        </div>
+    
+
+    <!-- Complain Form -->
+   <div class="table" id="complaints">
+           <h2>Complain Table</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Created At</th>
+                <th>Account Type</th>
+		<th>Action</th> <!-- New column for the Cancel button -->
+            </tr>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint.full_name }}</td>
+                    <td>{{ complaint.address }}</td>
+                    <td>{{ complaint.phone_number }}</td>
+                    <td>{{ complaint.description }}</td>
+                    <td>
+                        {% if complaint.image %}
+                            <img src="{{ complaint.image.url }}" alt="Complaint Image" style="max-width: 100px; cursor: pointer;" onclick="openModal('{{ complaint.image.url }}')">
+                        {% else %}
+                            No Image
+                        {% endif %}
+                    </td>
+                    <td>{{ complaint.created_at }}</td>
+                    <td>{{ complaint.account_type }}</td>
+		
+                    <td>
+                        <button onclick="cancelComplaint('{{ complaint.id }}')">Cancel</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+        </div>
+</div>
+
+
+    <!-- Contact Section -->
+    <div class="contact" id="contact">
+        <h1>Contact Us</h1>
+       <div class="box-container">
+        <div class="box">
+           <h3> <img src="https://p7.hiclipart.com/preview/710/874/478/leaf-logo-banana-leaves.jpg" alt="Leaf Logo">Ecosathi<i class=""></i></h3>
+            <p>Feel free to follow us on our social media handlers<br> all the links are given below.</p>
+            <p>For any Complain regarding the software feel free<br> to contact us on our Number or can mail to our gmail accounts</p>
+            <div class="share">
+                <a href="#"><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png'></a>
+                <a href="#"><img src='https://png.pngtree.com/png-clipart/20221019/original/pngtree-twitter-social-media-round-icon-png-image_8704823.png'></a>
+                <a href="#"><img src='https://png.pngtree.com/png-clipart/20230401/original/pngtree-three-dimensional-instagram-icon-png-image_9015419.png'></a>
+                <a href="#"><img src='https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png'></a>
+      </div>
+  </div>
+  <div class="box">
+            <h3>Contact Info</h3>
+                <a href="#" class="links"><img src='https://static.vecteezy.com/system/resources/thumbnails/019/923/706/small/telephone-and-mobile-phone-icon-calling-icon-transparent-background-free-png.png'>+91 70668 83930 <br></a>
+                  <a href="#" class="links"><img src='https://static.vecteezy.com/system/resources/thumbnails/019/923/706/small/telephone-and-mobile-phone-icon-calling-icon-transparent-background-free-png.png'>+91 95116 64509 <br></a>
+                  <a href="#"class="links"><img src='https://freepngimg.com/download/gmail/66519-google-icons-computer-logo-email-gmail.png'>ecosathi_01@gmail.com<br></a>
+                  <a href="#"class="links"><img src='https://cdn-icons-png.flaticon.com/512/2838/2838912.png'>Tathawade,Pune</a>
+
+          
+      </div>
+  <div class="Quick">
+            <h3>Quick Links</h3>
+                 <a href="#services" class="quick-links-button"><img src ='https://cdn.iconscout.com/icon/premium/png-256-thumb/service-2010915-1693762.png'>Services<br></a>
+                 <a href="#contact us" class="quick-links-button"><img src ='https://cdn-icons-png.flaticon.com/512/7269/7269995.png'>Contact Us<br></a>
+             </div>
+
+<div class="youtube-section">
+    <h3>Watch Our Latest Video</h3>
+    <!-- Replace 'YOUR_YOUTUBE_VIDEO_LINK' with the actual link -->
+    <iframe width="300" height="200" src="YOUR_YOUTUBE_VIDEO_LINK" frameborder="0" allowfullscreen></iframe>
+    <div class="video-buttons">
+        <a href="#" class="video-button"><img src="
+https://cdn-icons-png.flaticon.com/512/10307/10307855.png" alt="Like"></a>
+        <a href="#" class="video-button"><img src="https://cdn-icons-png.flaticon.com/128/10257/10257782.png" alt="Subscribe"></a>
+        <a href="#" class="subscribe-button"><img src="https://static.vecteezy.com/system/resources/thumbnails/022/603/364/small/icon-subsribe-pro-png.png" alt="Share"></a>
+    </div>
+</div>
+
+
+</div>
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>&copy; 2023 Ecosathi. All Rights Reserved. | Designed by <a href="#" target="_blank">Hexacoder</a></p>
+    </div>
+    <!-- Smooth Scroll Script -->
+  <!-- Add jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    var csrf_token = "{{ csrf_token }}";
+</script>
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+
+
+
+// Smooth Scroll for Services
+$(".header .nav a[href='#services']").click(function () {
+    $("html, body").animate({
+        scrollTop: $(".services").offset().top
+    }, 1000);
+});
+
+function showPickupForm() {
+    document.getElementById('garbagePickup').style.display = 'block';
+    document.getElementById('complaints').style.display = 'none';
+}
+
+function showComplainForm() {
+    document.getElementById('garbagePickup').style.display = 'none';
+    document.getElementById('complaints').style.display = 'block';
+}
+
+// Hide forms by default
+$(document).ready(function () {
+    $('#garbagePickup').hide();
+    $('#complaints').hide();
+});
+// Function to get the CSRF token from the cookie
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Function to cancel a complaint
+function cancelComplaint(complaintId, rowId) {
+    // Your AJAX request
+    $.ajax({
+        url: '/cancel_complaint/' + complaintId + '/',
+        method: 'POST',
+        dataType: 'json',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        success: function (data) {
+            if (data.success) {
+                // Remove the row from the table
+                $('#' + rowId).remove();
+
+                // Optionally, update the UI to reflect the deletion
+                console.log('Complaint canceled successfully');
+            } else {
+                console.error('Failed to cancel complaint:', data.error);
+            }
+        },
+        error: function () {
+            console.error('Error while canceling complaint');
+        }
+    });
+}
+
+
+// Function to open the modal with the clicked image
+        function openModal(imageSrc) {
+	    console.log('Opening modal with image:', imageSrc);
+            var modal = document.getElementById('imageModal');
+            var modalImage = document.getElementById('modalImage');
+            
+            modal.style.display = 'block';
+            modalImage.src = imageSrc;
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            var modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+
+
+</script>
+
+</body>
+
+</html>

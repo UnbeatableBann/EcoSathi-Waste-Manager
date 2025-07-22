@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://event.unitar.org/sites/default/files/product/environment-day-concept-8kk6nzy_1.jpg') no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .create-account-container {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, .2);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .create-account-container h2 {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .create-account-container select {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 95%;
+        }
+.error-message {
+            color: red;
+font:bold;
+            font-size: 18px
+            margin-top: 5px;
+        }
+
+        .create-account-container input[type="text"],
+        .create-account-container input[type="password"],
+ 	.create-account-container input[type="email"],
+        .create-account-container input[type="tel"] {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 91%;
+        }
+
+        .create-account-container input[type="password"] {
+            padding-right: 10px; 
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .create-account-container input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            width: 95%;
+        }
+       .button-like {
+            display: inline-block;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none; /* Remove default underline */
+            transition: background-color 0.3s ease; /* Add a smooth transition effect */
+        }
+
+        .button-like:hover {
+            background-color: #0056b3; /* Change background color on hover */
+        }
+        p {
+            display: inline; /* Make the paragraph inline */ 
+            padding-top: 20px;
+            margin-right: 250px; /* Adjust the spacing between the link and the paragraph */
+            top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="create-account-container">
+        <h2>Create an Account</h2>
+{% if message %}
+    <p>{{ message }}</p>
+{% endif %}
+       <form action="/create_account" method="post" id="registration-form" onsubmit="return validateForm()" >
+            {% csrf_token %}
+            <label for="account-type">Type of Account:</label>
+            <select name="account-type" id="account-type" required>
+                <option value="user">User</option>
+                <option value="business">Business</option>
+            </select>
+            <input type="text" name="fullname" placeholder="Full Name" required>
+            <input type="text" name="new-username" placeholder="Username" required>
+            <div class="password-container">
+                <input type="password" name="new-password" placeholder="Password" required>
+            </div>
+            <label for="email"></label>
+            <input type="email" id="email" name="email"  placeholder="Email" required oninput="validateEmail()">
+            <div class="error-message" id="email_error"></div>
+            <!-- Error message for email validation -->
+            
+            <input type="tel" name="phone_number" id="phone_number" placeholder="Phone Number" maxlength="10" required>
+            <div class="error-message" id="phone_number_error"></div>
+            <!-- Error message for phone number validation -->
+            
+            <div id="business-type">
+                <label for="business-type-select">Type of Business:</label>
+                <select name="business-type-select" id="business-type-select" required onchange="showBusinessType()">
+                    <option value="hotel">Hotel</option>
+                    <option value="restaurant">Restaurant</option>
+                    <option value="hospital">Hospital</option>
+                    <option value="mini-industry">Mini Industry</option>
+                    <option value="others">Others</option>
+                </select>
+                <div id="other-business" style="display: none;">
+                    <label for="other-business-text">Specify Business:</label>
+                    <input type="text" name="other-business-text" placeholder="Specify your business">
+                </div>
+            </div>
+            <input type="submit" value="Create Account">
+        </form>
+       <p>Already have an account? <a href="/login">Login now</a></p>
+        <a href="/home" class="button-like">Go To Home</a>
+    </div>
+    <script>
+        function showBusinessType() {
+    const accountType = document.querySelector("#account-type");
+    const businessType = document.querySelector("#business-type");
+    const otherBusiness = document.querySelector("#other-business");
+    const businessTypeSelect = document.querySelector("#business-type-select"); // Corrected this line
+
+    if (accountType.value === "business" && businessTypeSelect.value === "others") {
+        businessType.style.display = "block";
+        otherBusiness.style.display = "block";
+    } else if (accountType.value === "business") {
+        businessType.style.display = "block";
+        otherBusiness.style.display = "none";
+    } else {
+        businessType.style.display = "none";
+        otherBusiness.style.display = "none";
+    }
+}
+
+// Initialize the form based on the selected account type
+showBusinessType();
+
+// Add event listeners to the account type and business type select elements
+document.querySelector("#account-type").addEventListener("change", showBusinessType);
+document.querySelector("#business-type-select").addEventListener("change", showBusinessType);
+
+document.getElementById('phone_number').addEventListener('input', function(event) {
+      const input = event.target;
+      if (input.value.length > 10) {
+        input.value = input.value.slice(0, 10); // Limits the input to 10 characters
+      }
+    });
+
+
+
+            function validateEmail() {
+                // JavaScript function to validate email format
+                const emailInput = document.getElementById("email");
+                const errorElement = document.getElementById("email_error");
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!emailRegex.test(emailInput.value)) {
+                    errorElement.textContent = 'Invalid email address';
+                } else {
+                    errorElement.textContent = '';
+                }
+            }
+
+            function validateForm() {
+            const phoneInput = document.getElementById('phone_number');
+            const phoneError = document.getElementById('phone_number_error');
+            const numericValue = phoneInput.value.replace(/\D/g, '');
+
+            if (numericValue.length !== 10) {
+                phoneError.textContent = 'Phone number must be exactly 10 digits';
+                return false; // Prevent form submission
+            } else {
+                phoneError.textContent = '';
+                return true; // Allow form submission
+            }
+        }
+        
+       function validateForm() {
+            const phoneInput = document.getElementById('phone_number');
+            const phoneError = document.getElementById('phone_number_error');
+            const numericValue = phoneInput.value.replace(/\D/g, '');
+
+            if (numericValue.length !== 10) {
+                phoneError.textContent = 'Phone number must be exactly 10 digits';
+                return false; // Prevent form submission
+            } else {
+                phoneError.textContent = '';
+                return true; // Allow form submission
+            }
+        }
+        
+        const phoneInput = document.getElementById('phone_number');
+        const phoneError = document.getElementById('phone_number_error');
+
+        phoneInput.addEventListener('input', function(event) {
+            const input = event.target;
+            const numericValue = input.value.replace(/\D/g, '');
+
+            if (numericValue !== input.value) {
+                phoneError.textContent = 'Phone number must contain only numeric characters';
+            } else if (numericValue.length !== 10) {
+                phoneError.textContent = 'Phone number must be 10 digits';
+            } else {
+                phoneError.textContent = '';
+            }
+
+            input.value = numericValue.slice(0, 10);
+        });
+    </script>
+</body>
+</html>

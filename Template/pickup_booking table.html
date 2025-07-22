@@ -1,0 +1,58 @@
+<!-- pickup_booking_table.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickup Booking Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Pickup Booking Table</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>User Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Pickup Date</th>
+                <th>Pickup Time</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in pickup_bookings %}
+                <tr>
+                    <td>{{ booking.companyName }}</td>
+                    <td>{{ booking.userName }}</td>
+                    <td>{{ booking.address }}</td>
+                    <td>{{ booking.phone_number }}</td>
+                    <td>{{ booking.pickupDate }}</td>
+                    <td>{{ booking.pickupTime }}</td>
+                    <td>{{ booking.created_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

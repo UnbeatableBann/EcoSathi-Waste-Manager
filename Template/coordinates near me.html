@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinates Near Pune Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Coordinates Near Pune</h1>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([18.5204, 73.8567], 10); // Pune coordinates
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Coordinates near Pune
+        var coordinates = [
+            { name: 'Location 1', lat: 18.5204, lon: 73.8567 },
+            { name: 'Location 2', lat: 18.5255, lon: 73.8682 },
+            { name: 'Location 3', lat: 18.5156, lon: 73.8762 },
+            { name: 'Location 4', lat: 18.5093, lon: 73.8297 }
+        ];
+
+        // Add markers for each coordinate with popups showing names and coordinates
+        coordinates.forEach(function(coord) {
+            L.marker([coord.lat, coord.lon]).addTo(map)
+                .bindPopup(`${coord.name}<br>Latitude: ${coord.lat.toFixed(6)}<br>Longitude: ${coord.lon.toFixed(6)}`);
+        });
+    </script>
+</body>
+</html>
